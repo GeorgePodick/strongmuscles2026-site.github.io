@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>STRONGMUSCLES | DDX STYLE — Sport Nutrition | Итоговый проект</title>
+    <style>
+        /* ========== CSS-ПЕРЕМЕННЫЕ (3+ шт) ========== */
+        :root {
+            --primary: #ff6b00;
+            --primary-dark: #cc5500;
+            --accent: #8B00FF;
+            --accent-glow: rgba(139, 0, 255, 0.4);
+            --bg-dark: #0a0a0a;
+            --bg-card: #121212;
+            --text-light: #ffffff;
+            --text-muted: #aaaaaa;
+            --border-glow: rgba(255, 107, 0, 0.3);
+            --transition-default: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            --font-main: 'Montserrat', 'Inter', system-ui, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* DDX фон — глубокий фиолетово-черный + псевдоэлемент ::before */
+        .ddx-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: radial-gradient(ellipse at 30% 40%, #1a0033 0%, #000000 80%);
+        }
+
+        .ddx-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, rgba(255, 107, 0, 0.02) 0px, rgba(255, 107, 0, 0.02) 2px, transparent 2px, transparent 10px);
+            pointer-events: none;
+        }
+
+        /* ШАПКА (position fixed) */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary);
+            transition: var(--transition-default);
+        }
+
+        .header.scrolled {
+            padding: 12px 0;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Flexbox навигация */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: var(--transition-default);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-tag {
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero h1 {
+            font-size: 90px;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin-bottom: 40px;
+            border-left: 3px solid var(--primary);
+            padding-left: 20px;
+        }
+
+        .hero p strong {
+            color: var(--primary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 14px 36px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition-default);
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 0, 0.4);
+            animation: pulse 0.5s ease;
+        }
+
+        /* Анимация keyframes */
+        @keyframes pulse {
+            0% { transform: scale(1) translateY(-3px); }
+            50% { transform: scale(1.02) translateY(-3px); }
+            100% { transform: scale(1) translateY(-3px); }
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: white;
+            padding: 12px 34px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition-default);
+            display: inline-block;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 107, 0, 0.1);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* ТОВАРЫ — GRID */
+        .products {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .section-title span {
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 50px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+        }
+
+        /* Использование :nth-child для стилизации нечетных карточек */
+        .products-grid .product-card:nth-child(odd) {
+            background: linear-gradient(145deg, #151515, #0a0a0a);
+            border-left: 1px solid rgba(255, 107, 0, 0.4);
+        }
+
+        .product-card {
+            background: linear-gradient(145deg, var(--bg-card), #0a0a0a);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition-default);
+            border: 1px solid rgba(255, 107, 0, 0.2);
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 35px rgba(255, 107, 0, 0.2);
+        }
+
+        /* HOVER-ЭФФЕКТ СМЕНЫ КАРТИНКИ */
+        .product-img {
+            height: 260px;
+            position: relative;
+            overflow: hidden;
+            background: #0f0f0f;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 20px;
+            transition: opacity 0.3s ease, transform 0.4s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+        }
+
+        .img-default {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .img-hover {
+            opacity: 0;
+            z-index: 2;
+        }
+
+        .product-card:hover .img-default {
+            opacity: 0;
+        }
+
+        .product-card:hover .img-hover {
+            opacity: 1;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.08);
+        }
+
+        .product-info {
+            padding: 24px;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            background: linear-gradient(145deg, var(--bg-card), #0a0a0a);
+        }
+
+        .product-category {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .product-info h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .product-desc {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 12px 0;
+        }
+
+        .old-price {
+            font-size: 14px;
+            color: #555;
+            text-decoration: line-through;
+            margin-left: 8px;
+        }
+
+        .btn-card {
+            width: 100%;
+            background: rgba(255, 107, 0, 0.15);
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            padding: 12px;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition-default);
+            color: white;
+        }
+
+        .btn-card:hover {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* ФОРМА с валидацией и стилями :focus, :valid, :invalid */
+        .form-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #0a0a0a, #050505);
+        }
+
+        .form-container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, var(--bg-card), #0a0a0a);
+            border: 1px solid var(--border-glow);
+            border-radius: 28px;
+            padding: 50px;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .form-container h2 span {
+            color: var(--primary);
+        }
+
+        .form-container p {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            color: white;
+            font-size: 15px;
+            transition: var(--transition-default);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(255, 107, 0, 0.2);
+        }
+
+        /* Стили валидации (required поля) */
+        .form-group input:required:invalid:not(:placeholder-shown) {
+            border-color: #ff4444;
+            background: rgba(255, 68, 68, 0.05);
+        }
+
+        .form-group input:required:valid:not(:placeholder-shown) {
+            border-color: #00c853;
+            background: rgba(0, 200, 83, 0.05);
+        }
+
+        .form-group textarea:required:invalid:not(:placeholder-shown) {
+            border-color: #ff4444;
+        }
+
+        .form-group textarea:required:valid:not(:placeholder-shown) {
+            border-color: #00c853;
+        }
+
+        .form-btn {
+            grid-column: span 2;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: none;
+            padding: 16px;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition-default);
+            color: white;
+            font-size: 16px;
+        }
+
+        .form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.3);
+        }
+
+        /* ФУТЕР */
+        .footer {
+            background: #050505;
+            padding: 50px 0 30px;
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .footer p {
+            color: #555;
+            font-size: 12px;
+        }
+
+        .footer strong, .footer em {
+            color: var(--primary);
+        }
+
+        /* ========== АДАПТИВ: 2 БРЕЙКПОИНТА ========== */
+        /* Планшеты и мобильные */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+            .hero h1 {
+                font-size: 48px;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+            .form-btn {
+                grid-column: span 1;
+            }
+            .section-title {
+                font-size: 32px;
+            }
+            .nav-links {
+                gap: 20px;
+            }
+        }
+
+        /* Малые экраны (второй брейкпоинт) */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            .hero p {
+                font-size: 14px;
+            }
+            .product-img {
+                height: 200px;
+            }
+            .product-info h3 {
+                font-size: 18px;
+            }
+            .price {
+                font-size: 24px;
+            }
+            .section-title {
+                font-size: 26px;
+            }
+            .form-container {
+                padding: 30px 20px;
+            }
+            .btn-primary, .btn-outline {
+                padding: 10px 24px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="ddx-bg"></div>
+
+<header class="header" id="header">
+    <div class="container">
+        <nav class="nav">
+            <div class="logo">STRONG<span style="color:#ff6b00;">MUSCLES</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Главная</a></li>
+                <li><a href="#products">Продукты</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-tag">PREMIUM SPORT NUTRITION</div>
+            <h1>STRONG<br><span>MUSCLES</span></h1>
+            <p> Спортивное питание для <em>настоящих атлетов</em>. <strong>Скидки до 40%</strong> только сегодня!</p>
+            <div class="btn-group">
+                <a href="#products" class="btn-primary">Каталог →</a>
+                <a href="#contact" class="btn-outline">Контакты</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title">🔥 <span>ХИТЫ ПРОДАЖ</span> 🔥</h2>
+            
+            <div class="products-grid">
+                
+                <!-- 1. WHEY PROTEIN (добавлены обе картинки) -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img  src="https://enzym.ru/imagecache/card/storage/products/40/65/40656/08c3782a69c18167c984ed97bc95f8641e6dc506.jpg" alt="Whey Protein упаковка">
+                        
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">💪 ПРОТЕИН</div>
+                        <h3>WHEY PROTEIN</h3>
+                        <p class="product-desc">Сывороточный протеин 2кг. <strong>24г белка</strong> на порцию. <em>Быстрое усвоение</em>.</p>
+                        <div class="price">3 990 ₽ <span class="old-price">5 990 ₽</span></div>
+                        <button class="btn-card" onclick="alert('✅ Whey Protein добавлен в корзину')">В корзину →</button>
+                    </div>
+                </div>
+
+                <!-- 2. PRE-WORKOUT PSYCHOTIC -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img  src="https://avatars.mds.yandex.net/get-mpic/11397617/2a000001922130a063d7e5ec65fb3286ce52/orig" alt="Psychotic предтрен">
+                        
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">⚡ ПРЕДТРЕН</div>
+                        <h3>Psychotic</h3>
+                        <p class="product-desc">Мощный предтреник для <strong>взрывной энергии</strong> и фокуса. <em>Без жжения</em>.</p>
+                        <div class="price">2 990 ₽ <span class="old-price">4 290 ₽</span></div>
+                        <button class="btn-card" onclick="alert('✅ Предтрен добавлен в корзину')">В корзину →</button>
+                    </div>
+                </div>
+
+                <!-- 3. CREATINE 300G -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img class="img-default" src="https://cdn.rigla.ru/media/catalog/product/cache/afad95d7734d2fa6d0a8ba78597182b7/4/9/4979019-d-8-4-9-d849e1c1207f064227b6a83ebbd48d270f1a059f_4979019.jpg" alt="Креатин моногидрат">
+                        <img class="img-hover" src="https://avatars.mds.yandex.net/i?id=8dc303f42152f32dc89522d17be79ddd_l-4182885-images-thumbs&n=13" alt="Креатин Сила">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">🏋️ КРЕАТИН</div>
+                        <h3>CREATINE 300G</h3>
+                        <p class="product-desc">Моногидрат креатина для <strong>силы и выносливости</strong>. Повышает <em>работоспособность</em>.</p>
+                        <div class="price">1 490 ₽ <span class="old-price">2 490 ₽</span></div>
+                        <button class="btn-card" onclick="alert('✅ Креатин добавлен в корзину')">В корзину →</button>
+                    </div>
+                </div>
+
+                <!-- 4. ZMA + B6 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img  src="https://energy-body.ru/upload/resize_webp/w0_h0/goods_offer/5c/9e/5c9eece8972144c115c83d44319246fd.webp" alt="ZMA B6 комплекс">
+                        
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">💊 ВОССТАНОВЛЕНИЕ</div>
+                        <h3>ZMA + B6</h3>
+                        <p class="product-desc"><strong>Глубокий сон</strong> и выработка тестостерона. <em>Для быстрого восстановления</em>.</p>
+                        <div class="price">690 ₽</div>
+                        <button class="btn-card" onclick="alert('✅ ZMA в корзине')">Купить →</button>
+                    </div>
+                </div>
+
+                <!-- 5. L-GLUTAMINE -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img  src="https://sportivnoepitanie.ru/img/item/500/optimum-nutrition-glutamine-powder-600g-1.jpg" alt="L-Глютамин порошок">
+                        
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">🌀 ВОССТАНОВЛЕНИЕ</div>
+                        <h3>L-GLUTAMINE</h3>
+                        <p class="product-desc">Быстрое восстановление после тренировок. <strong>Укрепляет иммунитет</strong>.</p>
+                        <div class="price">1 290 ₽ <span class="old-price">2 190 ₽</span></div>
+                        <button class="btn-card" onclick="alert('✅ Глютамин добавлен в корзину')">В корзину →</button>
+                    </div>
+                </div>
+
+                <!-- 6. CITRULLINE MALATE -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img  src="https://image.kazanexpress.ru/ct4nt2io49aplra1012g/original.jpg" alt="Цитруллин Малат">
+                        
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">💥 ПАМП</div>
+                        <h3>CITRULLINE MALATE</h3>
+                        <p class="product-desc">Мощный памп, <strong>вазодилатация</strong>, невероятный <em>насос в мышцах</em>.</p>
+                        <div class="price">1 890 ₽ <span class="old-price">2 990 ₽</span></div>
+                        <button class="btn-card" onclick="alert('✅ Цитруллин малат добавлен — готовься к мощному пампу!')">В корзину →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="form-section">
+        <div class="form-container">
+            <h2>Есть <span>вопросы?</span></h2>
+            <p>Оставь заявку — ответим в течение 10 минут.</p>
+            <form id="ddxForm" onsubmit="event.preventDefault(); alert('Спасибо, ' + this.name.value + '! Мы свяжемся с вами.'); this.reset();">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Ваше имя *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Email *" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" name="phone" placeholder="Телефон">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="subject" placeholder="Тема вопроса">
+                    </div>
+                    <div class="form-group full-width">
+                        <textarea rows="3" name="message" placeholder="Ваше сообщение..."></textarea>
+                    </div>
+                    <button type="submit" class="form-btn">Отправить заявку →</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <p>© 2026 <strong>STRONGMUSCLES</strong> —  Все права защищены.</p>
+        
+    </div>
+</footer>
+
+</body>
+</html>
